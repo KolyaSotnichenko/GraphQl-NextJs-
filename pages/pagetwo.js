@@ -5,8 +5,7 @@ import Link from 'next/link'
 
 
 
-
-export default function Home({histories}) {
+export default function PostByID({history}) {
   return (
     <div className={styles.container}>
       <Head>
@@ -18,20 +17,16 @@ export default function Home({histories}) {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
-
-        <Link href="/pagetwo">
-          <a>Post by id =></a>
+        
+        <Link href="/">
+          <a>Home =></a>
         </Link>
 
         <div className={styles.grid}>
-          {histories.map(history => {
-            return (
-              <a key={history.id}className={styles.card}>
-                <h3>{ history.title }</h3>
-                <p>{history.details}</p>
-              </a>
-            );
-          })}
+            <a key={history.id}className={styles.card}>
+              <h3>{ history.title }</h3>
+              <p>{history.details}</p>
+            </a>
         </div>
 
       </main>
@@ -59,8 +54,8 @@ export async function getStaticProps() {
 
   const { data } = await client.query({
     query: gql`
-      query GetHistories {
-        histories(limit: 10) {
+      query GetHistory {
+        history(id: "1") {
           id
           title
           details  
@@ -71,7 +66,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      histories: data.histories
+      history: data.history
     }
   }
 }
